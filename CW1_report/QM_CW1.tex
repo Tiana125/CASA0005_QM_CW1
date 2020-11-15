@@ -65,7 +65,7 @@
 
 \begin{document}
 \pagenumbering{arabic}
-\title{How does allocation of funding to London local authorities affect obesity cases in 2018}
+\title{How does obesity cases densities affect allocation of funding to London local authorities in 2018}
 \author{CASA 0005 Quantitative Methods Coursework 1}
 \date{November 15, 2020}
 \maketitle
@@ -84,8 +84,8 @@ The data used in this study contains population, obesity cases, total budget, an
 \hline
 
  & local authorities & total obesities & total population & obesity density & ... & total budget & ... \\ \hline
-0 & Barking and Dagenham & 763 & 181779 & 0.420 & ... & 139000 & ... \\ \hline
-1 & Barnet & 773 & 355955 & 0.217 & ... & 220000 & ... \\ \hline
+0 & Barking and Dagenham & $763$ & $181779$ & $0.420$ & ... & $139000$ & ... \\ \hline
+1 & Barnet & $773$ & $355955$ & $0.217$ & ... & 220000 & ... \\ \hline
  \multicolumn{7}{c}{\vdots} \\ \hline
 \end{tabular}}
 \captionsetup{font=scriptsize}
@@ -95,14 +95,14 @@ Names of local authority areas; total obesity cases in each area; total populati
 \end{center}
 \end{table}
 
-Only one observation is considered an outlier due to its relatively small scale, City of London data,  therefore dropped from the dataset. Its population is below the average population in London boroughs by $97\%$, having this data in the linear regression plot of obesity cases vs. total budget spent lowers the regression coefficient from $0.437$ to $0.349$. 
+Only one observation is considered an outlier due to its relatively small scale, City of London data,  therefore is dropped from the dataset. Its population is below the average population in London boroughs by $97\%$, having this data in the linear regression plot of obesity density vs. total budget lowers the regression coefficient from $0.437$ to $0.349$. 
 
 
 \subsection{Methodlogy}
 Three approaches were taken to investigate the criteria of funding:
 
 \romannum{1}. 
-A linear line was fitted using scipy.stats.linregress() between total budget spent and obesity density. 
+A linear line was fitted using scipy.stats.linregress() between obesity density and total budget spent. 
 
 
 \romannum{2}.
@@ -113,7 +113,8 @@ Finally, a non-linear approach was taken. Polynomial regression of various degre
 
 
 \subsection{Results}
-\romannum{1}. Logically one might assume that the more obesity cases discovered per unit population, the more funding would be allocated. The linear line fitted to total budget spent vs. obesity density yields a coefficient of determination of $0.002$, which means that only $0.2\%$ of the variance of dependent variable (total budget) is explained by independent variable (obesity density). Log transformations were also applied to the variables, associated parameters are shown in Table \eqref{t2}. 
+\romannum{1}. Logically one might assume that the more obesity cases discovered per unit population, the more funding should be allocated. 
+The linear line fitted to obesity density vs. total budget spent yields a coefficient of determination of $0.002$, which means that only $0.2\%$ of the variance of dependent variable (total budget) is explained by independent variable (obesity density). Log transformations were also applied to the variables, associated parameters are shown in Table \eqref{t2}. 
 
 
 \begin{table}[H]
@@ -122,23 +123,28 @@ Finally, a non-linear approach was taken. Polynomial regression of various degre
 \begin{tabular}{|l|c|c|c|c|}
 \hline
  &	unchanged data &$log(x)$ and y&$log(y)$ and x&	$log(x)$ and $log(y)$	 \\ \hline
-slope &	\num{3e-9} & 0.001 & \num{3e-7} & 0.0574\\ \hline
-constant	&-0.002 & -0.005 & 0.47 & -0.259 \\ \hline
-$R^2$	&0.037 & 0.032 &0.29 & 0.29\\ \hline
-Pearson correlation coefficient &  0.192  &0.18 & 0.538 & 0.537  \\ \hline
-p value & 0.29 & 0.32 & 0.001 & 0.002 \\ \hline
+slope &	$9.9e7$ & $9.6e5$ & $49$ & $5.07$\\ \hline
+
+constant	& $1.6e5$ & $-3.1e5$ & $12$ & $9.47$ \\ \hline
+
+$R^2$	&$0.037$ &$0.29$ & $0.032$ & $0.29$\\ \hline
+
+Pearson correlation coefficient & $0.19$ & $0.537$ &$0.18$ & $0.536$  \\ \hline
+
+p value & $0.29$ & $0.001$ & $0.32$ & $0.002$ \\ \hline
+
 relationship implied & linear   & exponential & exponential  & power \\ \hline
 \end{tabular}}
 \captionsetup{font=scriptsize}
-\caption{coefficients related to the relationship between original and log-transformed total budget spent and obesity density} \label{t2}
+\caption{coefficients related to the relationship between original and log-transformed obesity density (x) and total budget spent(y)} \label{t2}
 \end{center}
 \end{table}
 
-As the maximum value of $R^2$ being under $0.3$ in Table \eqref{t2}, the amount of funding allocated to local authorities is extremely weakly correlated with the obesity cases per unit population by the power law, thus indicating that this relationship is meaningless. 
+As the maximum value of $R^2$ being under $0.3$ in Table \eqref{t2}, the amount of funding allocated is extremely weakly correlated with the obesity cases per unit population by the power law. No relationship is within the accepted range of $R^2 \geq 0.5$ or $p \leq 0.05 $, thus indicating there is no meaningful linear, exponential, or power law relationships between them. 
 
 
 \romannum{2}.
-The lack of a meaningful linear relationship could be induced by number of outliers involved. The outliers in this case originate from changes in human behaviour, the government may identify some boroughs need more attention due to other reasons that cannot be demonstrated from statistical measures. Building from the results in \romannum{1}, log transformed data has been used to plot figure 1, where in \verb|RANSAC|, a considerable proportion of data has been classified as outliers due to the randomness and large variance of human behaviours. 
+The lack of a meaningful linear relationship could be induced by number of outliers involved. The outliers in this case originate from changes in human behaviour, the government may identify some boroughs need more attention due to reasons that cannot be shown in statistical measures. Building from the results in \romannum{1}, log transformed data has been used to plot Figure \eqref{RANSAC}, where in \verb|RANSAC|, a considerable proportion of data has been classified as outliers due to its randomness and large variance of human behaviours. 
 
 % \begin{figure}[H]
 % \begin{center}
@@ -153,21 +159,21 @@ The lack of a meaningful linear relationship could be induced by number of outli
      \centering
      \includegraphics[width=.95\linewidth]{RANSAC.png}
      \captionsetup{font=scriptsize}
-     \caption{$log($total budget$)$ vs. $log($obesity density$)$ plot, linear relationship obtained from Ordinary Least Squares(red) and RANSAC(green). RANSAC is only fitting to inliers, while OLS is fitting to all data.}\label{RANSAC}
+     \caption{$log($obesity density$)$ vs. $log($total budget$)$ plot, linear relationship obtained from Ordinary Least Squares(red) and RANSAC(green). RANSAC is only fitting to inliers, while OLS is fitting to all data.}\label{RANSAC}
    \end{minipage}\hfill
    \begin{minipage}{0.48\textwidth}
      \centering
      \includegraphics[width=.95\linewidth]{poly.png}
      \captionsetup{font=scriptsize}
-     \caption{Fitting various degrees of polynomials to $log($total budget$)$ vs. $log($obesity density$)$ plot. Both logs refer to the natural log.}\label{Poly}
+     \caption{Fitting various degrees of polynomials to $log($obesity density$)$ vs. $log($total budget$)$ plot. All logs in this paper refer to the natural log.}\label{Poly}
    \end{minipage}
 \end{figure}
 
-Although RANSAC increased $R^2$ from $0.29$ to $0.39$, its p value has surmounted past the acceptable range ($0.05$). Visually, the rise of $R^2$ can be explained by the excessive amount of outliers removed. Additionally, the classification of outliers is entirely statistical and without contextual reasons, it is difficult to examine whether the outliers it has removed could otherwise play an essential part on the overall trend. To summarise, the criteria of identifying outliers in RANSAC approach is stricter and less stable, thus making it a less reliable method. 
+Although RANSAC increased $R^2$ from $0.29$ to $0.39$, p value has surmounted past the acceptable range. Visually, the rise of $R^2$ is explained by the excessive amount of outliers removed. Additionally, the classification of outliers is entirely statistical and without contextual reasons, it is difficult to examine whether the outliers could otherwise play an essential part on the overall trend. To summarise, the criteria of identifying outliers in RANSAC approach is stricter and less stable, thus making it a less reliable method. 
 
 
 \romannum{3}. 
-Selected degrees of 2 to 14 of polynomial regression are shown in Figure  \eqref{Poly}, and associated $R^2$ values are displayed in Table \eqref{t3}. 
+Selected degrees of 2 to 6 of polynomial regression are shown in Figure  \eqref{Poly}, and associated $R^2$ values are displayed in Table \eqref{t3}. 
 
 % \begin{figure}[H]
 % \begin{center}
@@ -180,25 +186,23 @@ Selected degrees of 2 to 14 of polynomial regression are shown in Figure  \eqref
 \begin{table}[H]
 \begin{center}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|c|c|c|c|c|c|c|}
+\begin{tabular}{|l|c|c|c|c|c|c|}
 \hline
-degrees of polynomial fitted &  2 & 3 & 5 & 6 & 9 & 14  \\ \hline
-Coefficient of determination $R^2$ & $0.292$ & $0.309$ & $0.353$ & $0.364$ & $0.373$ & $0.373$ \\ \hline
+degrees of polynomial fitted & 1 & 2 & 3 & 4 & 5 & 6   \\ \hline
+Coefficient of determination $R^2$ & $0.387$ & $0.307$ & $0.335$ & $0.34$ & $0.342$ & $0.346$ \\ \hline
 \end{tabular}}
 \captionsetup{font=scriptsize}
 \caption{coefficients related to the relationship between original and log-transformed total budget spent and obesity density} \label{t3}
 \end{center}
 \end{table}
 
-It can be spotted that as the degree of polynomial fitted increases, $R^2$ increases. One can deliberately dial the degree up and manipulate r squared to the range accepted, but this would not be a valid approach logically. If so, the model yielded would be highly influenced by the noise in the dataset, rather than demonstrating the data’s underlying real trend. Furthermore, $R^2$ starts to converge when hitting degree of 6, and a warning message is generated when fitting above this, suggesting that \verb|Polyfit()| may be poorly conditioned. The $R^2$ value that optimises the bias-variance trade-off is near $0.37$, still not enough to indicate an appropriate polynomial relationship. 
-
-
+It can be spotted that as the degree of polynomial fitted increases, $R^2$ increases. One could deliberately dial the degree up and manipulate r squared to the range accepted, but this would be an invalid approach logically. By doing so, the model yielded would be highly influenced by the noise in the dataset, rather than demonstrating its underlying real trend. Furthermore, $R^2$ starts to converge when hitting degree of 7, and a warning message is generated when fitting above this, suggesting that \verb|Polyfit()| may be poorly conditioned. The $R^2$ value that optimises the bias-variance trade-off is near $0.35$, this is still not enough to indicate an appropriate polynomial relationship. 
 
 \subsection{Conclusion}
-Logically, the obesity problem should be alleviated with more budget spent on tackling it. The drawback of this concept is the lack of a reference level, which arises from an existing annual increase of obesity density along with population expansion. The reference level of obesity density increase could be calculated from different budget spent in previous years and associated obesity densities. The alternative approach to fit a linear relationship by excluding outliers using RANSAC has unfortunately failed, due to its unstable and outlier-robust nature. Last but not least, there is no appropriate polynomial relationship that could conserve bias-variance trade-off. 
 
-One can conclude that there is no strong statistical relationship between total budget and obesity density. Another approach to examine the criteria of allocating funding is to consider the relationship of total budget with population and number of obesity cases respectively. Interestingly, there is strong power law relationship when fitting between the above variables. Additionally, no multiple linear relationship is found between areas of spending the budget and obesity density by plotting the correlation matrix. The above relationships have been omitted from this study for brevity. Further research could be conducted to investigate the reasons of such behaviours. 
+To conclude, there is no strong statistical relationship between obesity density and total budget. Neither a simple OLS nor an outlier-robust yet unstable RANSAC linear approach has correctly identify any relationships. There is no appropriate polynomial relationship that could balance bias-variance trade-off either. Another approach to examine the criteria of allocating funding is to consider the relationship of total budget with population and number of obesity cases respectively. Interestingly, there is a strong power law relationship when fitting between the above variables. Additionally, no multiple linear relationship is found between areas of spending the budget and obesity density by plotting the correlation matrix. The above results have been omitted from this study for brevity. Further research could be conducted to investigate the reasons of such behaviours. 
 
+Another question could be raised is whether the obesity problem is alleviated with more budget spent by exchanging the dependent and independent variables. Bearing in mind that a reference level of obesity density expansion, which arises from an existing annual increase of obesity density along with population increase, should be obtained beforehand. This reference level could be calculated from different budget spent in previous years and associated obesity densities. 
 
 \subsection{Appendix}
 Python code used to generate the figures and calculate the relevant data, as well as \LaTeX\  source code used to generate this report can be found at: \url{https://github.com/Tiana125/CASA0005_QM_CW1}

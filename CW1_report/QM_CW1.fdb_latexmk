@@ -1,16 +1,16 @@
 # Fdb version 3
-["bibtex QM_CW1"] 1605430769 "QM_CW1.aux" "QM_CW1.bbl" "QM_CW1" 1605430938
+["bibtex QM_CW1"] 1605436612 "QM_CW1.aux" "QM_CW1.bbl" "QM_CW1" 1605437301
   "/usr/local/texlive/2020/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
   "CW1.bib" 1605370125 1201 933b9d73b87cc9aff705277cacd42cfc ""
-  "QM_CW1.aux" 1605430937 4303 5ee6eb07d517fa7fea4906814d1f535e "xelatex"
+  "QM_CW1.aux" 1605437300 4343 38e8aec79c3ed1d68efb87d141200bc3 "xelatex"
   (generated)
   "QM_CW1.blg"
   "QM_CW1.bbl"
-["xdvipdfmx"] 1605430937 "QM_CW1.xdv" "QM_CW1.pdf" "QM_CW1" 1605430938
-  "QM_CW1.xdv" 1605430937 91528 0d9a87291392df7459a3e3098510e620 "xelatex"
+["xdvipdfmx"] 1605437300 "QM_CW1.xdv" "QM_CW1.pdf" "QM_CW1" 1605437301
+  "QM_CW1.xdv" 1605437300 91180 c4e7564e2400734b9bb105ad18721047 "xelatex"
   (generated)
   "QM_CW1.pdf"
-["xelatex"] 1605430936 "QM_CW1.tex" "QM_CW1.xdv" "QM_CW1" 1605430938
+["xelatex"] 1605437298 "QM_CW1.tex" "QM_CW1.xdv" "QM_CW1" 1605437301
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -132,14 +132,14 @@
   "/usr/local/texlive/2020/texmf-dist/web2c/texmf.cnf" 1583102494 39451 60d7debd9ef8ece44cbe965493576c2d ""
   "/usr/local/texlive/2020/texmf-var/web2c/xetex/xelatex.fmt" 1593124677 4771213 88cfbad545c4abd28c46a06d6024583c ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
-  "QM_CW1.aux" 1605430937 4303 5ee6eb07d517fa7fea4906814d1f535e "xelatex"
-  "QM_CW1.bbl" 1605430770 49 0eba253fc001332e731e8aba3f23127b "bibtex QM_CW1"
-  "QM_CW1.out" 1605430937 291 df7407cd4ef659f107db75da3a3679de "xelatex"
-  "QM_CW1.tex" 1605430936 12516 eaf440481600c4e45d86b1c5a8e157c8 ""
-  "RANSAC.png" 1605429948 17345 ebcc0105a362ff6dcb85d21b06af8cd5 ""
-  "poly.png" 1605429886 30770 0a368c4903c1795ed162070fb98a4580 ""
+  "QM_CW1.aux" 1605437300 4343 38e8aec79c3ed1d68efb87d141200bc3 "xelatex"
+  "QM_CW1.bbl" 1605436613 49 0eba253fc001332e731e8aba3f23127b "bibtex QM_CW1"
+  "QM_CW1.out" 1605437300 291 df7407cd4ef659f107db75da3a3679de "xelatex"
+  "QM_CW1.tex" 1605437293 12662 6fb19a98fc76d5e706a6168260484e96 ""
+  "RANSAC.png" 1605434584 17540 705eeb3ee430f13ccdac73dcc8f692bf ""
+  "poly.png" 1605435131 27176 28050e8651de7b4d8751b8180c306ad9 ""
   (generated)
-  "QM_CW1.log"
-  "QM_CW1.aux"
   "QM_CW1.out"
+  "QM_CW1.aux"
+  "QM_CW1.log"
   "QM_CW1.xdv"
