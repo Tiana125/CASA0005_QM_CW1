@@ -14,13 +14,15 @@
 \usepackage{romannum}
 \bibliographystyle{plain}
 \usepackage{parskip}
+\usepackage{hyperref}
+
 \setlength{\parindent}{0em}
 \linespread{1.25}
 \newcommand\diff{\,\mathrm{d}}
 \renewcommand{\thesubsection}{\arabic{subsection}.}
 \renewcommand{\thesubsubsection}{\roman{subsubsection}.}
 
-\usepackage[margin=1.2in]{geometry}
+\usepackage[margin=1.1in]{geometry}
 \usepackage{siunitx}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage{xcolor}
@@ -68,8 +70,7 @@
 \date{November 15, 2020}
 \maketitle
 \subsection{Introduction}
-Today, almost one in five Year 6 children in the UK is found to be obese, and sadly this number is not dropping during the past few years \citep{nhs_national_2018}. The origins of childhood obesity stem from various aspects, including lifestyle issues, genetic and environmental causes. The government has been taking considerable forms of actions to tackle this problem from its root, from sugar reduction to advertising and promotions. This study investigates how government has been allocating their funding to local authorities in London.
-% , and the performance of local authorities using said funding. 
+NHS claimed almost one in five Year 6 children in the UK was found to be obese in 2018, and sadly this number is not dropping during the past few years. The origins of childhood obesity stem from various aspects, including lifestyle, genetic and environmental issues. The government has been taking considerable forms of actions to tackle this problem, from sugar reduction to advertising and promotions. This study investigates how government has been allocating their funding, in particular, to local authorities in London.
 
 
 \subsection{Data}
@@ -78,23 +79,23 @@ The data used in this study contains population, obesity cases, total budget, an
 
 \begin{center}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{c|c|c|c|c|c|c}%{36em}
+\begin{tabular}{c|c|c|c|c|c|c|c}
 % {|*{15}{>{\centering\arraybackslash}X|}}
 \hline
-% \multicolumn{1}{c|}{} & \multicolumn{12}{c|}{data} & \multicolumn{1}{c|}{mean} & \multicolumn{1}{c}{uncertainties} \\ \hline
- & local authorities & total obesities & total population & ... & total budget & ... \\ \hline
-0 & Barking and Dagenham & 763 & 181779 & ... & 139000 & ... \\ \hline
-1 & Barnet & 773 & 355955 & ... & 220000 & ... \\ \hline
+
+ & local authorities & total obesities & total population & obesity density & ... & total budget & ... \\ \hline
+0 & Barking and Dagenham & 763 & 181779 & 0.420 & ... & 139000 & ... \\ \hline
+1 & Barnet & 773 & 355955 & 0.217 & ... & 220000 & ... \\ \hline
  \multicolumn{7}{c}{\vdots} \\ \hline
 \end{tabular}}
 \captionsetup{font=scriptsize}
 \caption{Illustration of data used, list of column names{} include: \newline
-Names of local authority areas; total obesity cases in each area; total population; obesity density (obesity cases divided by population); total budget allocated (in pounds); percent of budget spent on improving air quality, cleaner environment, health training, raising school awareness, media awareness and subsiding counselling.
+Names of local authority areas; total obesity cases in each area; total population; obesity density per 100 people (obesity cases divided by population multiplied by 100); total budget allocated (in pounds); percent of budget spent on improving air quality, cleaner environment, health training, raising school awareness, media awareness and subsiding counselling.
 } \label{t1}
 \end{center}
 \end{table}
 
-Only one observation is considered an outlier due to its relatively small scale, and therefore dropped from the dataset, City of London data. Its population is below the average population in London boroughs by $97\%$, having this data in the linear regression plot of obesity cases in 2018 vs. total budget spent lowers the regression coefficient from $0.437$ to $0.349$. 
+Only one observation is considered an outlier due to its relatively small scale, City of London data,  therefore dropped from the dataset. Its population is below the average population in London boroughs by $97\%$, having this data in the linear regression plot of obesity cases vs. total budget spent lowers the regression coefficient from $0.437$ to $0.349$. 
 
 
 \subsection{Methodlogy}
@@ -108,11 +109,11 @@ A linear line was fitted using scipy.stats.linregress() between total budget spe
 A more outlier-robust linear approach, called Random Sample Consensus (RANSAC) was used. This method compliments the ordinary least squares methods by adding detections of outliers and accord them to have no influence on the parameters of the model (Fischler and Bolles, 1981). In \verb|sklearn.linear_model.RANSACRegressor()|, outliers are classified as those whose residual exceed the median absolute deviation of dependent variables (Pedregosa, F. et al., 2011).
 
 \romannum{3}.
-Finally, a non-linear approach was taken. Polynomial regression of various degrees was fitted to the data using {\verb|numpy.polyfit()| in Python. 
+Finally, a non-linear approach was taken. Polynomial regression of various degrees was fitted to the data using \verb|numpy.polyfit()| in Python. 
 
 
 \subsection{Results}
-\romannum{1}. Logically one might assume that the more obesity cases discovered per unit population, the more funding would be allocated. The linear line fitted to total budget spent vs. obesity density yields a coefficient of determination of 0.002, which means that only $0.2\%$ of the variance of dependent variable (total budget) is explained by independent variable (obesity density). Log transformations were also applied to the variables, associated parameters are shown in Table \eqref{t2}. 
+\romannum{1}. Logically one might assume that the more obesity cases discovered per unit population, the more funding would be allocated. The linear line fitted to total budget spent vs. obesity density yields a coefficient of determination of $0.002$, which means that only $0.2\%$ of the variance of dependent variable (total budget) is explained by independent variable (obesity density). Log transformations were also applied to the variables, associated parameters are shown in Table \eqref{t2}. 
 
 
 \begin{table}[H]
@@ -137,142 +138,85 @@ As the maximum value of $R^2$ being under $0.3$ in Table \eqref{t2}, the amount 
 
 
 \romannum{2}.
+The lack of a meaningful linear relationship could be induced by number of outliers involved. The outliers in this case originate from changes in human behaviour, the government may identify some boroughs need more attention due to other reasons that cannot be demonstrated from statistical measures. Building from the results in \romannum{1}, log transformed data has been used to plot figure 1, where in \verb|RANSAC|, a considerable proportion of data has been classified as outliers due to the randomness and large variance of human behaviours. 
 
-
-
-\begin{figure}[H]
+% \begin{figure}[H]
 % \begin{center}
-% \includegraphics[scale=0.45]{3_i.png}
+% \includegraphics[scale=0.45]{RANSAC.png}
+% \captionsetup{font=scriptsize}
+% \caption{$log($total budget$)$ vs. $log($obesity density$)$ plot, linear relationship obtained from Ordinary Least Squares(red) and RANSAC(green). RANSAC is only fitting to inliers, while OLS is fitting to all data.}\label{RANSAC}
 % \end{center}
-\caption{Best fit line for $I$ and $V$}
+% \end{figure}
+
+\begin{figure}[!htb]
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{RANSAC.png}
+     \captionsetup{font=scriptsize}
+     \caption{$log($total budget$)$ vs. $log($obesity density$)$ plot, linear relationship obtained from Ordinary Least Squares(red) and RANSAC(green). RANSAC is only fitting to inliers, while OLS is fitting to all data.}\label{RANSAC}
+   \end{minipage}\hfill
+   \begin{minipage}{0.48\textwidth}
+     \centering
+     \includegraphics[width=.95\linewidth]{poly.png}
+     \captionsetup{font=scriptsize}
+     \caption{Fitting various degrees of polynomials to $log($total budget$)$ vs. $log($obesity density$)$ plot. Both logs refer to the natural log.}\label{Poly}
+   \end{minipage}
 \end{figure}
 
-
-In Table \eqref{iv}, the expected $I$ is calculated from the equation of the fitted line, which was yielded in python programme code ``3.ii'': $I=6.777V+1.998$. 
-
-
+Although RANSAC increased $R^2$ from $0.29$ to $0.39$, its p value has surmounted past the acceptable range ($0.05$). Visually, the rise of $R^2$ can be explained by the excessive amount of outliers removed. Additionally, the classification of outliers is entirely statistical and without contextual reasons, it is difficult to examine whether the outliers it has removed could otherwise play an essential part on the overall trend. To summarise, the criteria of identifying outliers in RANSAC approach is stricter and less stable, thus making it a less reliable method. 
 
 
 \romannum{3}. 
-\begin{figure}[H]
+Selected degrees of 2 to 14 of polynomial regression are shown in Figure  \eqref{Poly}, and associated $R^2$ values are displayed in Table \eqref{t3}. 
 
-\caption{Best fit line with uncertainties}
-\end{figure}
-
-
-
-
-The probability $P(22.31;9) = 0.007953893$. As this probability is extremely close to 0, we reject null hypothesis since this implies the measurements are insignificant and unphysical. For a good fit we expect two-thirds of the data points to be within one standard error bar of the trend line. But in this graph we can only find 5 out of 11 points within one standard error bar. Therefore this is not a good fit.
-
-This suggests that the hypothesis of linear relationship between $v$ and $i$ is rejected. This may be the case theoretically, but in the real scenario, linear relationship cannot be maintained since the resistance is not constant (could be affected by temperature).
-
-
-
-\subsection{Best Fit by Minimizing $\chi^2$}
-\romannum{1}. Brewster angle is given by $\theta_B=\arctan(\frac{n_2}{n_1})$, 
-where $n_1$ is the refractive index of the initial medium through which the light propagates (the ``incident medium''), and $n_2$ is the index of the other medium. Therefore, with the knowledge of Brewster angle being 57 degree, and $n_1$ being 1 for air, we can calculate $n_2$, which is $1.539865$, rounded to $1.540$. 
-
-The expected value of $\mathbf{R}^2$ can be calculated by 
-\begin{equation}
-\mathbf{R}^2_{\perp}= \left(\frac{\cos \theta_1 - n\cos \theta_2}{\cos \theta_1+n\cos \theta_2}\right)^2 \qquad \mathbf{R}^2_{\parallel}= \left(\frac{n\cos \theta_1 - \cos \theta_2}{n\cos \theta_1+\cos \theta_2}\right)^2
-\end{equation}
-
-To conclude, a table with all values needed to calculate $\chi^2$ and $P(\chi^2)$ is written below. 
-
+% \begin{figure}[H]
+% \begin{center}
+% \includegraphics[scale=0.45]{poly.png}
+% \captionsetup{font=scriptsize}
+% \caption{Fitting various degrees of polynomials to $log($total budget$)$ vs. $log($obesity density$)$ plot. Both logs refer to the natural log.}\label{Poly}
+% \end{center}
+% \end{figure}
 
 \begin{table}[H]
 \begin{center}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\begin{tabular}{|l|c|c|c|c|c|c|c|}
 \hline
-$\theta_1$	&$\theta_1$ in radian &	$\mathbf{R}^2_{\parallel}$&	$\mathbf{R}^2_{\perp}$	&$\theta_2$ in radian	&expected $\mathbf{R}^2_{\perp}$ &	expected $\mathbf{R}^2_{\parallel}$ &	$\chi^2_{\perp}$&	$\chi^2_{\parallel}$ \\ \hline
-10	&0.174532925	&0.03&	0.037&	0.113008831&	0.047004879&	0.043388466&	25.02440082&	44.81275438 \\ \hline
-15	&0.261799388	&0.028&	0.039&	0.168880675&	0.049393107	&0.041138201&	27.00417064	&43.1530824 \\ \hline
-20	&0.34906585	&0.027&	0.043&	0.223978484	&0.052948477	&0.037974149&	24.74304991&	30.10798748 \\ \hline
-25	&0.436332313	&0.025&	0.047&	0.278019262	&0.057909564&	0.033897733&	29.75464401&	19.79241518 \\ \hline
-30	&0.523598776	&0.021&	0.055&	0.330698539	&0.064625378	&0.028937627&	23.16197549&	15.75148119 \\ \hline
-35	&0.610865238	&0.018&	0.063&	0.381685163	&0.073594848	&0.023180871&	28.06269852&	6.710354821 \\ \hline
-40	&0.698131701	&0.012&	0.075&	0.430616559	&0.085524952	&0.01682733	&27.69365481&	5.825778231 \\ \hline
-45	&0.785398163	&0.007&	0.09&	0.477095003	&0.101415223	&0.010285047&	32.57682719&	2.69788409 \\ \hline
-50	&0.872664626	&0.003&	0.114&	0.520685692	&0.1226792	&0.004338043&	18.83212679&	0.447589908 \\ \hline
-55	&0.959931089	&0.001&	0.146&	0.560917768	&0.151316707	&0.000444236&	7.066843977&	0.077218314 \\ \hline
-60	&1.047197551	&0.003&	0.188&	0.597289673	&0.190153592	&0.001271133&	1.159489483&	0.747245501 \\ \hline
-65	&1.134464014	&0.012&	0.245&	0.629280412	&0.243166177	&0.011675807&	0.840726951&	0.026275222 \\ \hline
-70	&1.221730476	&0.039&	0.326&	0.65636795	&0.315902862	&0.04053963	&25.48805113	&0.592615396 \\ \hline
-75	&1.308996939	&0.104&	0.445&	0.67805514	&0.416000321	&0.104310777&	210.2453493&	0.024145608 \\ \hline
-80	&1.396263402	&0.219&	0.604&	0.693901872	&0.553761346	&0.234129461&	630.9805948&	57.22514753 \\ \hline
-85	&1.483529864	&0.467&	0.822&	0.703559953	&0.742712787	&0.490951947&	1571.615549&	143.4239389 \\ \hline
+degrees of polynomial fitted &  2 & 3 & 5 & 6 & 9 & 14  \\ \hline
+Coefficient of determination $R^2$ & $0.292$ & $0.309$ & $0.353$ & $0.364$ & $0.373$ & $0.373$ \\ \hline
 \end{tabular}}
-\caption{Sets of data in order to calculate $\chi^2$} 
-\end{center}
-\end{table}
-We omit the values for 50, 55 and 60 degrees, since these are less than 3 error bars $(3\times0.002=0.006)$ from zero.
-
-The final result is listed in the following table. 
-
-\begin{table}[H]
-\begin{center}
-\begin{tabular}{|l|c|c|}
-\hline
-   &     perpendicular & parallel \\ \hline
-   $\chi^2$ & 2657.19 &  370.14 \\ \hline
-   $P(\chi^2)$ & 0 & $4.451\times10^{-71}$  \\ \hline
-\end{tabular}
-\caption{list of results for 4.i} 
+\captionsetup{font=scriptsize}
+\caption{coefficients related to the relationship between original and log-transformed total budget spent and obesity density} \label{t3}
 \end{center}
 \end{table}
 
-
-\romannum{2}.
-Excel solver is used to minimise $\chi^2$, results are listed below.
-
-
-\begin{table}[H]
-\begin{center}
-\begin{tabular}{|l|c|c|}
-\hline
- &     perpendicular & parallel \\ \hline
-   $\chi^2$ & 4793.01 &  309.32 \\ \hline
-   $P(\chi^2)$ & 0 & $ 2.70\times10^{-58}$  \\ \hline
-\end{tabular}
-\caption{Minimising $\chi^2_{\parallel}$ (n=1.481)} 
-\end{center}
-\end{table}
+It can be spotted that as the degree of polynomial fitted increases, $R^2$ increases. One can deliberately dial the degree up and manipulate r squared to the range accepted, but this would not be a valid approach logically. If so, the model yielded would be highly influenced by the noise in the dataset, rather than demonstrating the data’s underlying real trend. Furthermore, $R^2$ starts to converge when hitting degree of 6, and a warning message is generated when fitting above this, suggesting that \verb|Polyfit()| may be poorly conditioned. The $R^2$ value that optimises the bias-variance trade-off is near $0.37$, still not enough to indicate an appropriate polynomial relationship. 
 
 
 
+\subsection{Conclusion}
+Logically, the obesity problem should be alleviated with more budget spent on tackling it. The drawback of this concept is the lack of a reference level, which arises from an existing annual increase of obesity density along with population expansion. The reference level of obesity density increase could be calculated from different budget spent in previous years and associated obesity densities. The alternative approach to fit a linear relationship by excluding outliers using RANSAC has unfortunately failed, due to its unstable and outlier-robust nature. Last but not least, there is no appropriate polynomial relationship that could conserve bias-variance trade-off. 
+
+One can conclude that there is no strong statistical relationship between total budget and obesity density. Another approach to examine the criteria of allocating funding is to consider the relationship of total budget with population and number of obesity cases respectively. Interestingly, there is strong power law relationship when fitting between the above variables. Additionally, no multiple linear relationship is found between areas of spending the budget and obesity density by plotting the correlation matrix. The above relationships have been omitted from this study for brevity. Further research could be conducted to investigate the reasons of such behaviours. 
 
 
-\begin{table}[H]
-\begin{center}
-\begin{tabular}{|l|c|c|}
-\hline
- &     perpendicular & parallel \\ \hline
-   $\chi^2$ & 2251.85 &  503.80 \\ \hline
-   $P(\chi^2)$ & 0 & $ 2.28\times10^{-99}$  \\ \hline
-\end{tabular}
-\caption{Minimising $\chi^2_{\perp}$ (n=1.582)} 
-\end{center}
-\end{table}
-
-\begin{table}[H]
-\begin{center}
-\begin{tabular}{|l|c|c|}
-\hline
- &     perpendicular & parallel \\ \hline
-   $\chi^2$ & 2267.91 &  469.65 \\ \hline
-   $P(\chi^2)$ & 0 & $ 4.05\times10^{-92}$  \\ \hline
-\end{tabular}
-\caption{Minimising both $\chi^2$ (n=1.573)} 
-\end{center}
-\end{table}
+\subsection{Appendix}
+Python code used to generate the figures and calculate the relevant data, as well as \LaTeX\  source code used to generate this report can be found at: \url{https://github.com/Tiana125/CASA0005_QM_CW1}
 
 
-
+\newpage
 
 \appendix
 
-
-
 \bibliography{CW1}
+
+Fischler, M. A. and Bolles, R. C. (1981). ‘Random sample consensus: a paradigm for model fitting with applications to image analysis and automated cartography’. Communications of the ACM, 24 (6), pp. 381–395. doi: 10.1145/358669.358692.
+
+
+NHS. (2018). National Child Measurement Programme, England 2018/19 School Year. Available at: https://digital.nhs.uk/data-and-information/publications/statistical/national-child-measurement-programme/2018-19-school-year.
+
+
+Pedregosa, F., Varoquaux, G., Gramfort, A. and Michel, V. (2011). ‘Scikit-learn: Machine Learning in Python’. Journal of Machine Learning Research, (12), pp. 2825–2830.
+
+
 \end{document}
